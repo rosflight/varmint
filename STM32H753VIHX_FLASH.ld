@@ -43,15 +43,12 @@ _Min_Stack_Size = 0x2000; /* required amount of stack */
 /* Specify the memory areas */
 MEMORY
 {
-  FLASH (rx)     : ORIGIN = 0x08000000, LENGTH = 1024K /* Program Flash */
-  FLASH2 (rw)    : ORIGIN = 0x08100000, LENGTH = 1024K /* Parameter Flash */
+  FLASH (rx)     : ORIGIN = 0x08000000, LENGTH = 2048K
   DTCMRAM (xrw)  : ORIGIN = 0x20000000, LENGTH = 128K
-  RAM_D1 (xrw)   : ORIGIN = 0x24000000, LENGTH = 512K /* Domain 1 AXI SRAM */
-  SRAM1 (xrw)    : ORIGIN = 0x30000000, LENGTH = 128K /* Domain 2 SRAM1 - Not used */
-  SRAM2 (xrw)    : ORIGIN = 0x30020000, LENGTH = 128K /* Domain 2 SRAM2 - Not used */
-  SRAM3 (rw)     : ORIGIN = 0x30040000, LENGTH =  32K /* Domain 2 SRAM3 - Use for "my_dma_buffers" */
-  SRAM4 (rw)     : ORIGIN = 0x38000000, LENGTH =  64K /*  Domain 3 SRAM4 - Use for "my_bdma_buffers" */
-  ITCMRAM (xrw)  : ORIGIN = 0x00000000, LENGTH =  64K /* Allocated for "my_buffers" */
+  RAM_D1 (xrw)   : ORIGIN = 0x24000000, LENGTH = 512K
+  RAM_D2 (xrw)   : ORIGIN = 0x30000000, LENGTH = 288K
+  RAM_D3 (xrw)   : ORIGIN = 0x38000000, LENGTH = 64K
+  ITCMRAM (xrw)  : ORIGIN = 0x00000000, LENGTH = 64K
 }
 
 /* Define output sections */
@@ -173,25 +170,6 @@ SECTIONS
     libgcc.a ( * )
   }
 
-  my_dma_buffers :
-  {
-    . = ALIGN(32);
-     
-  } >SRAM3
-  
-  my_bdma_buffers :
-  {
-    . = ALIGN(32);
-     
-  } >SRAM4
-
-  my_buffers :
-  {
-    . = ALIGN(32);
-   
-  } >DTCMRAM
-
-  
   .ARM.attributes 0 : { *(.ARM.attributes) }
 }
 

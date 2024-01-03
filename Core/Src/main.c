@@ -96,7 +96,6 @@ DMA_HandleTypeDef hdma_usart3_tx;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void PeriphCommonClock_Config(void);
-static void MPU_Initialize(void);
 static void MPU_Config(void);
 /* USER CODE BEGIN PFP */
 #endif
@@ -124,6 +123,10 @@ int main(void)
 #endif
   /* USER CODE END 1 */
 
+  /* MPU Configuration--------------------------------------------------------*/
+  MPU_Config();
+/* Enable the CPU Cache */
+
   /* Enable I-Cache---------------------------------------------------------*/
   SCB_EnableICache();
 
@@ -134,9 +137,6 @@ int main(void)
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-
-  /* MPU Configuration--------------------------------------------------------*/
-  MPU_Config();
 
   /* USER CODE BEGIN Init */
 
