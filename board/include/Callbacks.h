@@ -44,12 +44,11 @@
 extern "C" {
 #endif
 
-void CDC_Receive_FS_Callback(uint8_t* buffer, uint16_t size);
-void CDC_TransmitCplt_FS_Callback(uint8_t* buffer, uint16_t size);
+void CDC_Receive_FS_Callback(uint8_t * buffer, uint16_t size);
+void CDC_TransmitCplt_FS_Callback(uint8_t * buffer, uint16_t size);
 
-//void UART_RxIdleCallback(UART_HandleTypeDef *huart);
-void RxIsrCallback(UART_HandleTypeDef *huart);
-
+// void UART_RxIdleCallback(UART_HandleTypeDef *huart);
+void RxIsrCallback(UART_HandleTypeDef * huart);
 
 #ifdef __cplusplus
 }

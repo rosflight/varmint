@@ -1,6 +1,6 @@
 /**
  ******************************************************************************
- * File     : CubeMx.h
+ * File     : CubeMX.h
  * Date     : Oct 5, 2023
  ******************************************************************************
  *
@@ -37,12 +37,6 @@
 
 #ifndef CUBEMX_H_
 #define CUBEMX_H_
-
-// My defines used by CubeMX
-
-#define SERVO_PWM_CLK_DIV  				(200-1)   // 200MHz/200 = 1Hz or 1us per count
-#define SERVO_PWM_PERIOD   				(20000)   // For 1MHz/50 = 50Hz
-#define SERVO_PWM_CENTER    			(1500)   // 1us * 1500 = 1500 us
 
 // CubeMX Defines:
 #define J000_JETSON_32KHZ_CLK_Pin GPIO_PIN_14
@@ -231,7 +225,7 @@ void PeriphCommonClock_Config(void);
 void MPU_Initialize(void);
 void MPU_Config(void);
 
-void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
+void HAL_TIM_MspPostInit(TIM_HandleTypeDef * htim);
 void Error_Handler(void);
 void SystemClock_Config(void);
 void PeriphCommonClock_Config(void);

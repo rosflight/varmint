@@ -36,14 +36,11 @@
  **/
 
 #include <main.h>
-
+#include <BoardConfig.h>
+#include <CubeMX.h>
 #include <Varmint.h>
 #include <mavlink.h>
 #include <rosflight.h>
-#include <CubeMx.h>
-
-#include <BoardConfig.h>
-#include <sandbox.h>
 
 extern Varmint varmint;
 
@@ -60,27 +57,17 @@ int main(void);
 /**
  * @fn int main(void)
  * @brief Program Start
- *
- * @return Never returns
  */
-
 int main(void)
 {
-	// Rosflight board code
-	varmint.init_board();
-	//sandbox();
+  // Rosflight board code
+  varmint.init_board();
 
-	// Rosflight base code
-	rosflight_firmware::Mavlink mavlink(varmint);
-	rosflight_firmware::ROSflight firmware(varmint, mavlink);
+  // Rosflight base code
+  rosflight_firmware::Mavlink mavlink(varmint);
+  rosflight_firmware::ROSflight firmware(varmint, mavlink);
 
-	firmware.init();
+  firmware.init();
 
-	while (true)
-	{
-		firmware.run();
-	}
-
-	return 0;
+  while (true) { firmware.run(); }
 }
-
