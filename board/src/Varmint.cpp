@@ -40,12 +40,9 @@
 #include <Spi.h>
 #include <Time64.h>
 #include <Varmint.h>
-#include <mavlink.h>
 #include <misc.h>
-#include <rosflight.h>
 #include <usb_device.h>
 #include <usbd_cdc_if.h>
-#include <util.h>
 
 #include <ctime>
 
@@ -262,45 +259,15 @@ void Varmint::serial_init(uint32_t baud_rate, uint32_t dev)
   if (dev == 1) telem_.reset_baud(baud_rate);
 }
 
-void Varmint::serial_write(const uint8_t * src, size_t len)
+void Varmint::serial_write(const uint8_t * src, size_t len, uint8_t qos)
 {
   SerialTxPacket p;
   p.timestamp = time64.Us();
   p.payloadSize = len;
+  p.qos = qos;
 
   if (len > (256 + 8)) len = (256 + 8);
   memcpy(p.payload, src, len);
-
-  uint8_t message_id = p.payload[5]; // Assumes Mavlink v1
-
-  switch (message_id) {
-    // Real-time
-    case MAVLINK_MSG_ID_SMALL_IMU:
-      p.qos = 0x00;
-      break; // Start of Timeframe
-    case MAVLINK_MSG_ID_ATTITUDE_QUATERNION:
-    case MAVLINK_MSG_ID_TIMESYNC:
-      p.qos = 0x01;
-      break;
-    // Secondary real-time
-    case MAVLINK_MSG_ID_HEARTBEAT:
-    case MAVLINK_MSG_ID_SMALL_BARO:
-    case MAVLINK_MSG_ID_DIFF_PRESSURE:
-    case MAVLINK_MSG_ID_ROSFLIGHT_GNSS:
-    case MAVLINK_MSG_ID_ROSFLIGHT_GNSS_FULL:
-    case MAVLINK_MSG_ID_ROSFLIGHT_BATTERY_STATUS:
-    case MAVLINK_MSG_ID_SMALL_MAG:
-    case MAVLINK_MSG_ID_RC_CHANNELS:
-    case MAVLINK_MSG_ID_SMALL_RANGE:
-    case MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW:
-      //		case MAVLINK_MSG_ID_ROSFLIGHT_STATUS:
-    case MAVLINK_MSG_ID_ROSFLIGHT_AUX_CMD:
-      p.qos = 0x02;
-      break;
-    // Otherwise send if there is bandwidth available
-    default:
-      p.qos = 0xFF;
-  }
 
   if (serial_device_ == 1) telem_.writePacket(&p);
   else

@@ -153,8 +153,8 @@ uint16_t Telem::writePacket(SerialTxPacket * p)
 {
   p->timestamp = time64.Us();
   p->packetSize = sizeof(SerialTxPacket) + p->payloadSize - SERIAL_MAX_PAYLOAD_SIZE;
-  if (p->qos < 0x02) return txFifo_[0].write((uint8_t *) p, p->packetSize);
-  else if (p->qos < 0xFF)
+  if (p->qos == 0) return txFifo_[0].write((uint8_t *) p, p->packetSize);
+  else if (p->qos == 1)
     return txFifo_[1].write((uint8_t *) p, p->packetSize);
   else
     return txFifo_[2].write((uint8_t *) p, p->packetSize);
@@ -168,7 +168,7 @@ bool Telem::newPacket(SerialTxPacket * p)
 
   if (txFifo_[0].packetCount() > 0) {
     size = txFifo_[0].read((uint8_t *) p, sizeof(SerialTxPacket));
-    if (p->qos == 0x00) { txFrameEndUs_ = time_now_us + txFrameSizeUs_; }
+    if (p->qos == 0) { txFrameEndUs_ = time_now_us + txFrameSizeUs_; }
   } else if ((txFifo_[1].packetCount() > 0)
              && ((int64_t) usPerByte_ * txFifo_[1].peek()->size < time_remaining_us)) {
     size = txFifo_[1].read((uint8_t *) p, sizeof(SerialTxPacket));

@@ -46,7 +46,7 @@
 typedef struct __attribute__((__packed__))
 {
   uint64_t timestamp; // us, time of data read complete
-  uint16_t qos;
+  uint8_t qos;
   uint16_t packetSize;
   uint16_t payloadSize;
   uint16_t reserved;
