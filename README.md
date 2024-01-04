@@ -1,3 +1,5 @@
+[![Build](https://github.com/rosflight/varmint/actions/workflows/build.yml/badge.svg)](https://github.com/rosflight/varmint/actions/workflows/build.yml)
+
 # Varmint
 
 This repository contains a board implementation of the [ROSflight firmware](https://github.com/rosflight/rosflight_firmware) for AeroVironment's Varmint FCU package, a STM32H753 based flight controller with a NVIDIA Jetson Orin NX on board. 
