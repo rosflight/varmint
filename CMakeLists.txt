@@ -15,7 +15,9 @@ set(SIZE arm-none-eabi-size)
 
 ### source files ###
 
-# Add test directory if being compiled without rosflight_firmware
+# Add test directory if being compiled without rosflight_firmware. Normally ROSFLIGHT_SOURCES is
+#  provided by the CMakeLists.txt file in the root of the firmware repo and has the source files
+#  for the firmware.
 if(NOT DEFINED ROSFLIGHT_SOURCES)
     include_directories(test)
     set(ROSFLIGHT_SOURCES "test/main.cpp")
@@ -69,6 +71,7 @@ target_compile_definitions(${PROJECT_NAME}.elf PUBLIC
   GIT_VERSION_HASH=0x${GIT_VERSION_HASH}
   GIT_VERSION_STRING=\"${GIT_VERSION_STRING}\"
 )
+# Used for specifying which board to instantiate in the main.cpp of the firmware
 target_compile_definitions(${PROJECT_NAME}.elf PRIVATE BUILD_VARMINT_BOARD)
 
 set(HEX_FILE ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.hex)
