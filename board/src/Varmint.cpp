@@ -255,7 +255,7 @@ void Varmint::clock_delay(uint32_t ms) { time64.dMs(ms); }
 // serial comms to the Companion computer
 void Varmint::serial_init(uint32_t baud_rate, uint32_t dev)
 {
-  serial_device_ = 1; // dev;// 1 = serial, otherwise = VCP
+  serial_device_ = 0; // 1 = serial, otherwise = VCP
   if (dev == 1) telem_.reset_baud(baud_rate);
 }
 
