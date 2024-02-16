@@ -41,6 +41,7 @@ _Min_Heap_Size = 0x2000;      /* required amount of heap  */
 _Min_Stack_Size = 0x2000; /* required amount of stack */
 
 /* Specify the memory areas */
+/* NOTE: STM32CubeMX will overwrite this memory allocation incorrectly when generating for the first time, don't include changes */
 MEMORY
 {
   FLASH (rx)     : ORIGIN = 0x08000000, LENGTH = 1024K /* Program Flash */
@@ -173,25 +174,26 @@ SECTIONS
     libgcc.a ( * )
   }
 
+  /* STM32CubeMX will also overwrite these three functions, don't include changes */
   my_dma_buffers :
   {
     . = ALIGN(32);
-     
+
   } >SRAM3
-  
+
   my_bdma_buffers :
   {
     . = ALIGN(32);
-     
+
   } >SRAM4
 
   my_buffers :
   {
     . = ALIGN(32);
-   
+
   } >DTCMRAM
 
-  
+
   .ARM.attributes 0 : { *(.ARM.attributes) }
 }
 
