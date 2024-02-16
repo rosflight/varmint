@@ -1,10 +1,15 @@
 # Build
-/build/
-/cmake-build*/
+build/
+cmake-build*/
 
 # IDE
-/.idea/
-/.vscode/
-.cproject
-.mxproject
-.project
+.idea/
+.vscode/
+
+# STM32Cube
+.cproject*
+.mxproject*
+*.launch
+#.project*
+.settings/
+config_*/
